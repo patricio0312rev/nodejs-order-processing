@@ -27,6 +27,7 @@ class OrderProcessor extends EventEmitter {
                     return;
                 }
             }
+            this.emit('PROCESSING_SUCCESS', payload.orderNumber);
         } else {
             this.emit('PROCESSING_FAILED', {
                 orderNumber: payload.orderNumber,
