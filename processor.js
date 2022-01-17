@@ -18,6 +18,14 @@ class OrderProcessor extends EventEmitter {
                 const { itemId, quantity } = item;
                 const isItemNotAvailable = this.validateItemInStock(itemId, quantity);
 
+                if(isItemNotAvailable) {
+                    this.emit('PROCESSING_FAILED', {
+                        orderNumber: payload.orderNumber,
+                        reason: 'INSUFFICIENT_STOCK',
+                        itemId: itemId,
+                    });
+                    return;
+                }
             }
         } else {
             this.emit('PROCESSING_FAILED', {
